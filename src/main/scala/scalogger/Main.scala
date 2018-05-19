@@ -1,24 +1,33 @@
 package scalogger
 
-import scalafx.application.JFXApp
-import scalafx.scene.Scene
-import scalafx.scene.layout.HBox
-import scalafx.scene.paint.Color._
-import scalafx.scene.text.Text
+import javafx.application.Application
+import javafx.scene.layout.HBox
+import javafx.scene.paint.Color
+import javafx.scene.text.Text
+import javafx.scene.{Group, Scene}
+import javafx.stage.Stage
 
-object Main extends JFXApp {
-  stage = new JFXApp.PrimaryStage()
-  stage.title.value = "Scalogger"
+object Main {
+  def main(args: Array[String]): Unit = {
+    Application.launch(classOf[Main], args: _*)
+  }
+}
 
-  val scene = new Scene()
-  scene.fill = Black
-  val content = new HBox()
-  val screenText = new Text()
-  screenText.text = "Welcome to Scalogger!"
-  screenText.fill = LightGreen
-  screenText.style = "-fx-font-size: 48pt"
-  content.children = screenText
-  scene.content = content
+class Main extends Application {
 
-  stage.scene = scene
+  override def start(primaryStage: Stage): Unit = {
+    primaryStage.setTitle("Scalogger")
+
+    val root = new Group()
+    val scene = new Scene(root, Color.BLACK)
+    primaryStage.setScene(scene)
+
+    val screenText = new Text("Welcome to Scalogger!")
+    screenText.setFill(Color.LIGHTGREEN)
+    screenText.setStyle("-fx-font-size: 48pt")
+    val content = new HBox(screenText)
+    root.getChildren.add(content)
+
+    primaryStage.show()
+  }
 }
