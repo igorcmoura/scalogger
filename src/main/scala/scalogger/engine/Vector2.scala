@@ -13,6 +13,8 @@ class Vector2(val x: Double, val y: Double) {
   lazy val length: Double = math.sqrt(math.pow(this.x, 2) + math.pow(this.y, 2))
   lazy val unit: Vector2 = this/this.length
 
+  def isInside(box: Box): Boolean = this.x > box.x && this.x < box.x + box.width && this.y > box.y && this.y < box.y + box.height
+
   override def toString: String = "(" + x + ", " + y + ")"
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Vector2]
