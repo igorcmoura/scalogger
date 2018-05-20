@@ -14,6 +14,21 @@ class Vector2(val x: Double, val y: Double) {
   lazy val unit: Vector2 = this/this.length
 
   override def toString: String = "(" + x + ", " + y + ")"
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Vector2]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Vector2 =>
+      (that canEqual this) &&
+        x == that.x &&
+        y == that.y
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(x, y)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }
 
 object Vector2 {
