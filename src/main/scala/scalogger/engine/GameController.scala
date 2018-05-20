@@ -14,7 +14,9 @@ object GameController {
 
   def initialize(pane: Pane, screenScale: Int): Unit = {
     val gridSize = 16 * screenScale
-    gameEntities += new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2*screenScale, gridSize)
+    val gridArea = new Box(0, 2, 14, 13) * gridSize
+
+    gameEntities += new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2 * screenScale, gridSize, gridArea)
 
     for (entity <- gameEntities) {
       val imageView = entity.getImageView

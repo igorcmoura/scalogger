@@ -4,11 +4,12 @@ import javafx.scene.image.ImageView
 import scalogger.engine.Direction._
 import scalogger.engine.Input.Button
 import scalogger.engine.Resources.Sprite
-import scalogger.engine.{GameEntity, Input, Movable, Vector2}
+import scalogger.engine.{Direction => _, _}
 
 class Frog(private var initialPosition: Vector2,
            private var maxSpeed: Double,
-           private var stepDistance: Int) extends GameEntity with Movable {
+           private var stepDistance: Int,
+           private var validArea: Box) extends GameEntity with Movable {
 
   private var position = initialPosition
   private var destinationPos = initialPosition
@@ -23,9 +24,12 @@ class Frog(private var initialPosition: Vector2,
 
   def jump(direction: Direction): Unit = {
     if (!jumping) {
-      jumping = true
       destinationPos = position + Vector2.unit(direction) * stepDistance
+      if (!destinationPos.isInside(validArea)) {
+        return
+      }
       facingDirection = direction
+      jumping = true
       // TODO stop riding rideable
     }
   }
