@@ -4,6 +4,8 @@ import javafx.animation.AnimationTimer
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
+import javafx.scene.text.Text
+import javafx.scene.text.Font
 import scalogger.engine.Resources.Sprite
 import scalogger.entities.Frog
 
@@ -20,6 +22,10 @@ object GameController {
   def initialize(pane: Pane, screenScale: Int): Unit = {
     val gridSize = 16 * screenScale
     val gridArea = new Box(0, 2, gridWidth, 13) * gridSize
+    val scoreText = new Text()
+
+    this.initScoreText(scoreText, gridSize)
+    pane.getChildren.add(scoreText)
 
     renderMap(pane, gridSize)
 
@@ -35,6 +41,14 @@ object GameController {
 
   private def addScore(value: Long): Unit = {
     score += value
+  }
+
+  private def initScoreText(scoreText: Text, gridSize: Int): Unit = {
+    scoreText.setText("SCORE: " + score.toString)
+    scoreText.setFont(Font.font ("Verdana", 20))
+    scoreText.setFill(Color.WHITE)
+    scoreText.setX(1*gridSize)
+    scoreText.setY(1*gridSize)
   }
 
   private def renderMap(pane: Pane, gridSize: Double): Unit = {
