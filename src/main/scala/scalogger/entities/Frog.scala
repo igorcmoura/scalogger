@@ -2,8 +2,9 @@ package scalogger.entities
 
 import javafx.scene.image.ImageView
 import scalogger.engine.Direction._
+import scalogger.engine.Input.Button
 import scalogger.engine.Resources.Sprite
-import scalogger.engine.{GameEntity, Movable, Vector2}
+import scalogger.engine.{GameEntity, Input, Movable, Vector2}
 
 class Frog(private var initialPosition: Vector2,
            private var maxSpeed: Double,
@@ -13,6 +14,7 @@ class Frog(private var initialPosition: Vector2,
   private var destinationPos = initialPosition
 
   private var jumping = false
+  private var facingDirection = UP
   private val imageView = new ImageView()
 
   def setStepDistance(stepDistance: Int): Unit = {
@@ -23,6 +25,7 @@ class Frog(private var initialPosition: Vector2,
     if (!jumping) {
       jumping = true
       destinationPos = position + Vector2.unit(direction) * stepDistance
+      facingDirection = direction
       // TODO stop riding rideable
     }
   }
@@ -38,7 +41,17 @@ class Frog(private var initialPosition: Vector2,
   }
 
   override def readInputs(): Unit = {
-    // TODO jump when jumping is false and reads a move input
+    if (!jumping) {
+      if (Input.getButtonDown(Button.MOVE_UP)) {
+        this.jump(UP)
+      } else if (Input.getButtonDown(Button.MOVE_DOWN)) {
+        this.jump(DOWN)
+      } else if (Input.getButtonDown(Button.MOVE_RIGHT)) {
+        this.jump(RIGHT)
+      } else if (Input.getButtonDown(Button.MOVE_LEFT)) {
+        this.jump(LEFT)
+      }
+    }
   }
 
   override def computePhysics(deltaTime: Double): Unit = {
@@ -62,11 +75,18 @@ class Frog(private var initialPosition: Vector2,
   }
 
   override def render(): Unit = {
-    if (!jumping) {
+    if (jumping) {
+      imageView.setImage(Sprite.FROG_JUMPING)
+    } else {
       imageView.setImage(Sprite.FROG_IDLE)
     }
     imageView.setX(position.x - stepDistance / 2)
     imageView.setY(position.y - stepDistance / 2)
-    // TODO render frog
+    facingDirection match {
+      case UP => imageView.setRotate(0)
+      case DOWN => imageView.setRotate(180)
+      case RIGHT => imageView.setRotate(90)
+      case LEFT => imageView.setRotate(270)
+    }
   }
 }
