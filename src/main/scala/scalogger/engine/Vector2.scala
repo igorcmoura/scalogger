@@ -6,8 +6,12 @@ class Vector2(val x: Double, val y: Double) {
 
   def +(that: Vector2) = new Vector2(this.x + that.x, this.y + that.y)
   def -(that: Vector2) = new Vector2(this.x - that.x, this.y - that.y)
-
   def *(value: Double) = new Vector2(this.x * value, this.y * value)
+  def /(value: Double) = new Vector2(this.x / value, this.y / value)
+  lazy val unary_- = new Vector2(-this.x, -this.y)
+
+  lazy val length: Double = math.sqrt(math.pow(this.x, 2) + math.pow(this.y, 2))
+  lazy val unit: Vector2 = this/this.length
 
   override def toString: String = "(" + x + ", " + y + ")"
 }
