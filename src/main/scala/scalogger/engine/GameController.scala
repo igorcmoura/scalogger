@@ -15,6 +15,7 @@ object GameController {
   private val gridWidth = 14
 
   private var lastTime: Long = 0
+  private var score: Long = 0
 
   def initialize(pane: Pane, screenScale: Int): Unit = {
     val gridSize = 16 * screenScale
@@ -30,6 +31,10 @@ object GameController {
       imageView.setFitWidth(gridSize)
       imageView.setFitHeight(gridSize)
     }
+  }
+
+  private def addScore(value: Long): Unit = {
+    score += value
   }
 
   private def renderMap(pane: Pane, gridSize: Double): Unit = {
