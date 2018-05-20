@@ -2,6 +2,6 @@ package scalogger.engine
 
 trait GameEntity {
   def readInputs()
-  def updatePhysics(deltaTime: Double)
+  def computePhysics(deltaTime: Double)
   def render()
 }

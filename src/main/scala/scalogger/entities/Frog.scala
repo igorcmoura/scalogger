@@ -36,7 +36,7 @@ class Frog(private var initialPosition: Vector2,
     // TODO jump when jumping is false and reads a move input
   }
 
-  override def updatePhysics(deltaTime: Double): Unit = {
+  override def computePhysics(deltaTime: Double): Unit = {
     // TODO get enemies on map and check collision
 
     if (jumping) {
