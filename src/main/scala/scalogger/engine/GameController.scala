@@ -16,7 +16,6 @@ object GameController {
   private val gameEntities = new mutable.MutableList[GameEntity]()
   private val gridWidth = 14
 
-  private var lastTime: Long = 0
   private var score: Long = 0
 
   def initialize(pane: Pane, screenScale: Int): Unit = {
@@ -79,6 +78,8 @@ object GameController {
   }
 
   def run(): Unit = {
+    var lastTime: Long = 0
+
     val animator = new AnimationTimer() {
       override def handle(now: Long): Unit = {
         val nowMilliSec = now / 1000000
