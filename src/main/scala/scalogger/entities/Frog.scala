@@ -1,4 +1,4 @@
-package scalogger
+package scalogger.entities
 
 import scalogger.engine.Direction._
 import scalogger.engine.{GameEntity, Movable, Vector2}
