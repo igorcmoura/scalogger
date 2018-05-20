@@ -5,7 +5,7 @@ import javafx.scene.Scene
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.stage.Stage
-import scalogger.engine.GameController
+import scalogger.engine.{GameController, Input}
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -23,6 +23,8 @@ class Main extends Application {
     GameController.initialize(root)
 
     val scene = new Scene(root, 224, 240, Color.BLACK)
+
+    Input.initialize(scene)
 
     primaryStage.setScene(scene)
     primaryStage.show()

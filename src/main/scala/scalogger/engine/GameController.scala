@@ -32,6 +32,7 @@ object GameController {
         for (entity <- gameEntities) {
           entity.readInputs()
         }
+        Input.update()
         for (entity <- gameEntities) {
           entity.computePhysics(nowMilliSec - lastTime)
         }
