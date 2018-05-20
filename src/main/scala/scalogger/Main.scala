@@ -23,7 +23,7 @@ class Main extends Application {
     val root = new Pane()
     GameController.initialize(root, screeScale)
 
-    val scene = new Scene(root, 224*screeScale, 240*screeScale, Color.BLACK)
+    val scene = new Scene(root, 224*screeScale, 256*screeScale, Color.BLACK)
     Input.initialize(scene)
 
     primaryStage.setScene(scene)
