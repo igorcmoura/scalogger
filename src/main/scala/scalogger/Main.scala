@@ -1,11 +1,11 @@
 package scalogger
 
 import javafx.application.Application
-import javafx.scene.layout.HBox
+import javafx.scene.Scene
+import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
-import javafx.scene.text.Text
-import javafx.scene.{Group, Scene}
 import javafx.stage.Stage
+import scalogger.engine.GameController
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -18,16 +18,15 @@ class Main extends Application {
   override def start(primaryStage: Stage): Unit = {
     primaryStage.setTitle("Scalogger")
 
-    val root = new Group()
-    val scene = new Scene(root, Color.BLACK)
+    val root = new Pane()
+
+    GameController.initialize(root)
+
+    val scene = new Scene(root, 224, 240, Color.BLACK)
+
     primaryStage.setScene(scene)
-
-    val screenText = new Text("Welcome to Scalogger!")
-    screenText.setFill(Color.LIGHTGREEN)
-    screenText.setStyle("-fx-font-size: 48pt")
-    val content = new HBox(screenText)
-    root.getChildren.add(content)
-
     primaryStage.show()
+
+    GameController.run()
   }
 }
