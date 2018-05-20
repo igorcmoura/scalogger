@@ -1,6 +1,8 @@
 package scalogger.entities
 
+import javafx.scene.image.ImageView
 import scalogger.engine.Direction._
+import scalogger.engine.Resources.Sprite
 import scalogger.engine.{GameEntity, Movable, Vector2}
 
 class Frog(private var initialPosition: Vector2,
@@ -11,6 +13,7 @@ class Frog(private var initialPosition: Vector2,
   private var destinationPos = initialPosition
 
   private var jumping = false
+  private val imageView = new ImageView()
 
   def setStepDistance(stepDistance: Int): Unit = {
     this.stepDistance = stepDistance
@@ -23,6 +26,8 @@ class Frog(private var initialPosition: Vector2,
       // TODO stop riding rideable
     }
   }
+
+  override def getImageView: ImageView = imageView
 
   override def move(movement: Vector2): Unit = {
     position += movement
@@ -57,6 +62,11 @@ class Frog(private var initialPosition: Vector2,
   }
 
   override def render(): Unit = {
+    if (!jumping) {
+      imageView.setImage(Sprite.FROG_IDLE)
+    }
+    imageView.setX(position.x - stepDistance / 2)
+    imageView.setY(position.y - stepDistance / 2)
     // TODO render frog
   }
 }
