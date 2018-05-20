@@ -9,15 +9,18 @@ import scala.collection.mutable
 object GameController {
 
   private val gameEntities = new mutable.MutableList[GameEntity]()
-  private val gridSize = 16
 
   private var lastTime: Long = 0
 
-  def initialize(pane: Pane): Unit = {
-    gameEntities += new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2, gridSize)
+  def initialize(pane: Pane, screenScale: Int): Unit = {
+    val gridSize = 16 * screenScale
+    gameEntities += new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2*screenScale, gridSize)
 
     for (entity <- gameEntities) {
-      pane.getChildren.add(entity.getImageView)
+      val imageView = entity.getImageView
+      pane.getChildren.add(imageView)
+      imageView.setFitWidth(gridSize)
+      imageView.setFitHeight(gridSize)
     }
   }
 
