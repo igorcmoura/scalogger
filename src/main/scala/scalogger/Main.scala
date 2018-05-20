@@ -16,14 +16,14 @@ object Main {
 class Main extends Application {
 
   override def start(primaryStage: Stage): Unit = {
-    val screeScale = 3
+    val screenScale = 3
 
     primaryStage.setTitle("Scalogger")
 
     val root = new Pane()
-    GameController.initialize(root, screeScale)
+    GameController.initialize(root, screenScale)
 
-    val scene = new Scene(root, 224*screeScale, 256*screeScale, Color.BLACK)
+    val scene = new Scene(root, 224*screenScale, 256*screenScale, Color.BLACK)
     Input.initialize(scene)
 
     primaryStage.setScene(scene)
