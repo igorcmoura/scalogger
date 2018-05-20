@@ -1,4 +1,4 @@
-package scalogger
+package scalogger.engine
 
 object Direction extends Enumeration {
   type Direction = Value

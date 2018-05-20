@@ -1,4 +1,4 @@
-package scalogger
+package scalogger.engine
 
 import Direction._
 
