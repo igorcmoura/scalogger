@@ -1,5 +1,7 @@
 package scalogger.engine
 
+import javafx.scene.shape.Rectangle
+
 class Box(val x: Double, val y: Double, val width: Double, val height: Double) {
   def this(x: Double, y: Double, size: Double) = this(x, y, size, size)
 
@@ -12,4 +14,6 @@ class Box(val x: Double, val y: Double, val width: Double, val height: Double) {
       new Vector2(x + width, y).isInside(this) ||
       new Vector2(x, y + height).isInside(this) ||
       new Vector2(x + width, y + height).isInside(this)
+
+  def toRectangle = new Rectangle(this.x, this.y, this.width, this.height)
 }
