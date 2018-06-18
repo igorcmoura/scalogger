@@ -1,9 +1,10 @@
 package scalogger.engine
 
-import javafx.scene.image.ImageView
+import javafx.scene.layout.Pane
 
 trait GameEntity {
-  def getImageView: ImageView
+  def attachToScreen(screen: Pane)
+  def detachFromScreen(screen: Pane)
 
   def readInputs()
   def computePhysics(deltaTime: Double)

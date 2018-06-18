@@ -1,22 +1,34 @@
 package scalogger.entities
 
 import javafx.scene.image.ImageView
+import javafx.scene.layout.Pane
 import scalogger.engine.Direction._
 import scalogger.engine.Input.Button
 import scalogger.engine.Resources.Sprite
 import scalogger.engine.{Direction => _, _}
 
-class Frog(private var initialPosition: Vector2,
+class Frog(initialPosition: Vector2,
            private var maxSpeed: Double,
-           private var stepDistance: Int,
+           private var gridSize: Int,
            private var validArea: Box) extends GameEntity with Movable {
 
   private var position = initialPosition
   private var destinationPos = initialPosition
+  private var stepDistance = gridSize
 
   private var jumping = false
   private var facingDirection = UP
   private val imageView = new ImageView()
+  imageView.setFitWidth(gridSize)
+  imageView.setFitHeight(gridSize)
+
+  def attachToScreen(screen: Pane): Unit = {
+    screen.getChildren.add(this.imageView)
+  }
+
+  def detachFromScreen(screen: Pane): Unit = {
+    screen.getChildren.remove(this.imageView)
+  }
 
   def setStepDistance(stepDistance: Int): Unit = {
     this.stepDistance = stepDistance
@@ -33,8 +45,6 @@ class Frog(private var initialPosition: Vector2,
       // TODO stop riding rideable
     }
   }
-
-  override def getImageView: ImageView = imageView
 
   override def move(movement: Vector2): Unit = {
     position += movement

@@ -32,10 +32,7 @@ object GameController {
     gameEntities += new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2 * screenScale, gridSize, gridArea)
 
     for (entity <- gameEntities) {
-      val imageView = entity.getImageView
-      pane.getChildren.add(imageView)
-      imageView.setFitWidth(gridSize)
-      imageView.setFitHeight(gridSize)
+      entity.attachToScreen(gameScreen)
     }
   }
 
