@@ -4,8 +4,7 @@ import javafx.animation.AnimationTimer
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
-import javafx.scene.text.Text
-import javafx.scene.text.Font
+import javafx.scene.text.{Font, Text}
 import scalogger.engine.Resources.Sprite
 import scalogger.entities.Frog
 
