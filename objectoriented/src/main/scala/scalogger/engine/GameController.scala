@@ -18,9 +18,9 @@ object GameController {
 
   private var score: Long = 0
 
-  def initialize(pane: Pane, screenScale: Int): Unit = {
+  def initialize(pane: Pane): Unit = {
     gameScreen = pane
-    val gridSize = 16 * screenScale
+    val gridSize = 16
     val gridArea = new Box(0, 2, gridWidth, 13) * gridSize
     val scoreText = new Text()
 
@@ -29,7 +29,7 @@ object GameController {
 
     renderMap(gridSize)
 
-    gameEntities += new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2 * screenScale, gridSize, gridArea)
+    gameEntities += new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2, gridSize, gridArea)
 
     for (entity <- gameEntities) {
       entity.attachToScreen(gameScreen)

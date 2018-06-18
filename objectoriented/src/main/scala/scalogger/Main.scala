@@ -15,15 +15,24 @@ object Main {
 
 class Main extends Application {
 
+  private val WIDTH = 224
+  private val HEIGHT = 256
+
   override def start(primaryStage: Stage): Unit = {
     val screenScale = 3
 
     primaryStage.setTitle("Scalogger")
 
     val root = new Pane()
-    GameController.initialize(root, screenScale)
+    root.setScaleX(screenScale)
+    root.setScaleY(screenScale)
+    val panePosition = screenScale * (screenScale - 1) / 2 // For some reason, when scaled, the pane moves on an arithmetic progressive distance
+    root.setTranslateX(WIDTH * panePosition)
+    root.setTranslateY(HEIGHT * panePosition)
 
-    val scene = new Scene(root, 224*screenScale, 256*screenScale, Color.BLACK)
+    GameController.initialize(root)
+
+    val scene = new Scene(root, WIDTH * screenScale, HEIGHT * screenScale, Color.BLACK)
     Input.initialize(scene)
 
     primaryStage.setScene(scene)
