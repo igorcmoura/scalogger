@@ -65,7 +65,7 @@ object GameController {
   }
 
   private def renderSideWalk(gridSize: Double, lane: Double): Unit = {
-    for (i <- 0 to gridWidth) {
+    for (i <- 0 until gridWidth) {
       val sideWalkView = new ImageView(Sprite.SIDEWALK)
       sideWalkView.setFitWidth(gridSize)
       sideWalkView.setFitHeight(gridSize)
