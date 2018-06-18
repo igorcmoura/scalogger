@@ -12,7 +12,7 @@ import scala.collection.mutable
 
 object GameController {
 
-  private val gameEntities = new mutable.MutableList[GameEntity]()
+  private val gameEntities = new mutable.ListBuffer[GameEntity]()
   private val gridWidth = 14
   private var gameScreen: Pane = _
 
@@ -29,11 +29,7 @@ object GameController {
 
     renderMap(gridSize)
 
-    gameEntities += new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2, gridSize, gridArea)
-
-    for (entity <- gameEntities) {
-      entity.attachToScreen(gameScreen)
-    }
+    addGameEntity(new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2, gridSize, gridArea))
   }
 
   private def addScore(value: Long): Unit = {
@@ -73,6 +69,16 @@ object GameController {
       sideWalkView.setY(lane * gridSize)
       gameScreen.getChildren.add(sideWalkView)
     }
+  }
+
+  def addGameEntity(entity: GameEntity): Unit = {
+    gameEntities += entity
+    entity.attachToScreen(gameScreen)
+  }
+
+  def removeGameEntity(entity: GameEntity): Unit ={
+    entity.detachFromScreen(gameScreen)
+    gameEntities -= entity
   }
 
   def run(): Unit = {
