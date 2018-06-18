@@ -76,7 +76,7 @@ class Frog(initialPosition: Vector2,
       val movement = direction * maxSpeed * deltaTime
       this.move(movement)
 
-      // If direction changed then it passed the destination position
+      // If direction changed then it surpassed the destination position
       if (direction != (destinationPos - position).unit) {
         this.moveTo(destinationPos)
       }
