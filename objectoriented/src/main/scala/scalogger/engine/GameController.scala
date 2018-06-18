@@ -45,10 +45,10 @@ object GameController {
 
   private def initScoreText(scoreText: Text, gridSize: Int): Unit = {
     scoreText.setText("SCORE: " + score.toString)
-    scoreText.setFont(Font.font ("Verdana", 20))
+    scoreText.setFont(Font.font("Verdana", 20))
     scoreText.setFill(Color.WHITE)
-    scoreText.setX(1*gridSize)
-    scoreText.setY(1*gridSize)
+    scoreText.setX(1 * gridSize)
+    scoreText.setY(1 * gridSize)
   }
 
   private def renderMap(gridSize: Double): Unit = {
