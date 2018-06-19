@@ -54,7 +54,7 @@ class Frog(initialPosition: Vector2,
     this.position = position
   }
 
-  override def readInputs(): Unit = {
+  override def processInput(): Unit = {
     if (!jumping) {
       if (Input.getButtonDown(Button.MOVE_UP)) {
         this.jump(UP)
@@ -68,7 +68,7 @@ class Frog(initialPosition: Vector2,
     }
   }
 
-  override def computePhysics(deltaTime: Double): Unit = {
+  override def update(deltaTime: Double): Unit = {
     // TODO get enemies on map and check collision
 
     if (jumping) {

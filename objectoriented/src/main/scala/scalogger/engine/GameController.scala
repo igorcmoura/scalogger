@@ -93,11 +93,11 @@ object GameController {
           lastTime = nowMilliSec
         }
         for (entity <- gameEntities) {
-          entity.readInputs()
+          entity.processInput()
         }
         Input.update()
         for (entity <- gameEntities) {
-          entity.computePhysics(nowMilliSec - lastTime)
+          entity.update(nowMilliSec - lastTime)
         }
         for (entity <- gameEntities) {
           entity.render()

@@ -21,7 +21,7 @@ class Car(initialPosition: Vector2, private var carType: CarType, private var gr
     screen.getChildren.remove(this.imageView)
   }
 
-  override def computePhysics(deltaTime: Double): Unit = {
+  override def update(deltaTime: Double): Unit = {
     this.position += Vector2.unit(RIGHT) * carType.getSpeed * deltaTime
   }
 
