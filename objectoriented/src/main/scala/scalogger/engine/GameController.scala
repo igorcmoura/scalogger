@@ -94,7 +94,7 @@ object GameController {
     entity.attachToScreen(gameScreen)
   }
 
-  def removeGameEntity(entity: GameEntity): Unit ={
+  def removeGameEntity(entity: GameEntity): Unit = {
     entity.detachFromScreen(gameScreen)
     gameEntities -= entity
   }
