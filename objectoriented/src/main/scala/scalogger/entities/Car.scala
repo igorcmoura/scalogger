@@ -2,16 +2,17 @@ package scalogger.entities
 
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
-import scalogger.engine.{GameEntity, Vector2}
+import scalogger.engine.{GameController, GameEntity, Spawnable, Vector2}
 
-class Car(initialPosition: Vector2, private var carType: CarType, private var gridSize: Int) extends GameEntity {
-  private var position = initialPosition
+class Car(initialPosition: Vector2, private var carType: CarType, private var gridSize: Int) extends GameEntity with Spawnable[Car] {
 
   private var position = initialPosition
 
   private val imageView = new ImageView(carType.getSprite)
   imageView.setFitWidth(gridSize * carType.getSpriteSize)
   imageView.setFitHeight(gridSize)
+
+  override def spawn(): Car = new Car(this.position, this.carType, this.gridSize)
 
   override def attachToScreen(screen: Pane): Unit = {
     screen.getChildren.add(this.imageView)
@@ -23,6 +24,9 @@ class Car(initialPosition: Vector2, private var carType: CarType, private var gr
 
   override def update(deltaTime: Double): Unit = {
     this.position += Vector2.unit(carType.getDirection) * carType.getSpeed * deltaTime
+    if (this.position.x > 16 * gridSize || this.position.x < -2 * gridSize) {
+      GameController.removeGameEntity(this)
+    }
   }
 
   override def render(): Unit = {
