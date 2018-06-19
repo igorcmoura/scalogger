@@ -6,7 +6,7 @@ trait GameEntity {
   def attachToScreen(screen: Pane)
   def detachFromScreen(screen: Pane)
 
-  def readInputs()
-  def computePhysics(deltaTime: Double)
-  def render()
+  def readInputs(): Unit = {}
+  def computePhysics(deltaTime: Double): Unit = {}
+  def render(): Unit = {}
 }
