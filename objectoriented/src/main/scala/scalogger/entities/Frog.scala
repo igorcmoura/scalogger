@@ -22,11 +22,11 @@ class Frog(initialPosition: Vector2,
   imageView.setFitWidth(gridSize)
   imageView.setFitHeight(gridSize)
 
-  def attachToScreen(screen: Pane): Unit = {
+  override def attachToScreen(screen: Pane): Unit = {
     screen.getChildren.add(this.imageView)
   }
 
-  def detachFromScreen(screen: Pane): Unit = {
+  override def detachFromScreen(screen: Pane): Unit = {
     screen.getChildren.remove(this.imageView)
   }
 
