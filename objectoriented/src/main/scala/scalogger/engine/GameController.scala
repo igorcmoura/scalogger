@@ -5,8 +5,9 @@ import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.scene.text.{Font, Text}
+import scalogger.engine.Direction.{LEFT, RIGHT}
 import scalogger.engine.Resources.Sprite
-import scalogger.entities.Frog
+import scalogger.entities.{Car, CarType, Frog}
 
 import scala.collection.mutable
 
@@ -29,6 +30,7 @@ object GameController {
     pane.getChildren.add(scoreText)
 
     renderMap()
+    createSpawners()
 
     val gridArea = new Box(0, 2, gridWidth, 13) * gridSize
     addGameEntity(new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2, gridSize, gridArea))
@@ -71,6 +73,20 @@ object GameController {
       sideWalkView.setY(lane * gridSize)
       gameScreen.getChildren.add(sideWalkView)
     }
+  }
+
+  private def createSpawners(): Unit = {
+    val truck = new Car(new Vector2(14.5 * gridSize, 9.5 * gridSize), new CarType(Sprite.TRUCK, 2, 0.03, LEFT), gridSize)
+    val greySportCar = new Car(new Vector2(-0.5 * gridSize, 10.5 * gridSize), new CarType(Sprite.SPORTCAR_GREY, 1, 0.02, RIGHT), gridSize)
+    val car = new Car(new Vector2(14.5 * gridSize, 11.5 * gridSize), new CarType(Sprite.CAR, 1, 0.013, LEFT), gridSize)
+    val bulldozer = new Car(new Vector2(-0.5 * gridSize, 12.5 * gridSize), new CarType(Sprite.BULLDOZER, 1, 0.01, RIGHT), gridSize)
+    val yellowSportCar = new Car(new Vector2(14.5 * gridSize, 13.5 * gridSize), new CarType(Sprite.SPORTCAR_YELLOW, 1, 0.01, LEFT), gridSize)
+
+    addGameEntity(new Spawner(truck, 3000, 6000))
+    addGameEntity(new Spawner(greySportCar, 10000, 12000))
+    addGameEntity(new Spawner(car, 4000, 8000))
+    addGameEntity(new Spawner(bulldozer, 6000, 9000))
+    addGameEntity(new Spawner(yellowSportCar, 6000, 9000))
   }
 
   def addGameEntity(entity: GameEntity): Unit = {
