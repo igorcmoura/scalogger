@@ -2,12 +2,12 @@ package scalogger.entities
 
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
-import scalogger.engine.Direction.RIGHT
 import scalogger.engine.{GameEntity, Vector2}
 
 class Car(initialPosition: Vector2, private var carType: CarType, private var gridSize: Int) extends GameEntity {
   private var position = initialPosition
 
+  private var position = initialPosition
 
   private val imageView = new ImageView(carType.getSprite)
   imageView.setFitWidth(gridSize * carType.getSpriteSize)
@@ -22,7 +22,7 @@ class Car(initialPosition: Vector2, private var carType: CarType, private var gr
   }
 
   override def update(deltaTime: Double): Unit = {
-    this.position += Vector2.unit(RIGHT) * carType.getSpeed * deltaTime
+    this.position += Vector2.unit(carType.getDirection) * carType.getSpeed * deltaTime
   }
 
   override def render(): Unit = {
