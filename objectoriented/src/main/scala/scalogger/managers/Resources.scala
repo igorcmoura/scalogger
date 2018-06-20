@@ -9,6 +9,14 @@ object Resources {
     val FROG_IDLE = new Image("file:sprites/frog_idle.png")
     val FROG_JUMPING = new Image("file:sprites/frog_jumping.png")
 
+    val FROG_DEATH_1 = new Image("file:sprites/frog_death_1.png")
+    val FROG_DEATH_2 = new Image("file:sprites/frog_death_2.png")
+    val FROG_DEATH_3 = new Image("file:sprites/frog_death_3.png")
+    val FROG_DROWNING_1 = new Image("file:sprites/frog_drowning_1.png")
+    val FROG_DROWNING_2 = new Image("file:sprites/frog_drowning_2.png")
+    val FROG_DROWNING_3 = new Image("file:sprites/frog_drowning_3.png")
+    val SKULL = new Image("file:sprites/skull.png")
+
     val CAR = new Image("file:sprites/car.png")
     val BULLDOZER = new Image("file:sprites/bulldozer.png")
     val SPORTCAR_YELLOW = new Image("file:sprites/sportcar_yellow.png")
