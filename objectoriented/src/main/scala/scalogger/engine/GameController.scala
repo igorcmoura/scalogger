@@ -17,7 +17,7 @@ object GameController {
   private val gameEntities = new mutable.ListBuffer[GameEntity]()
 
   private var gameScreen: Pane = _
-  private var map: Map = _
+  private var map: GameMap = _
 
   private var score: Long = 0
 
@@ -28,7 +28,7 @@ object GameController {
     val mapWidth = 14
     val playableArea = new Box(0, 2, mapWidth, 13) * gridSize
     val waterArea = new Box(0, 1.2, mapWidth, 7) * gridSize
-    map = new Map(gridSize, mapWidth, playableArea, waterArea)
+    map = new GameMap(gridSize, mapWidth, playableArea, waterArea)
 
     val scoreText = new Text()
 

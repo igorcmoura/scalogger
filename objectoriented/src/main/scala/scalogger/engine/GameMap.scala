@@ -5,7 +5,7 @@ import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import scalogger.engine.Resources.Sprite
 
-class Map(private val _gridSize: Int, private val _mapWidth: Int, private val _playableArea: Box, private val _waterArea: Box) {
+class GameMap(private val _gridSize: Int, private val _mapWidth: Int, private val _playableArea: Box, private val _waterArea: Box) {
   def gridSize: Int = _gridSize
   def mapWidth: Int = _mapWidth
   def playableArea: Box = _playableArea

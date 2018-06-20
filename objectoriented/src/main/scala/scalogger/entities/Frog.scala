@@ -9,7 +9,7 @@ import scalogger.engine.{Direction => _, _}
 
 class Frog(initialPosition: Vector2,
            private var maxSpeed: Double,
-           private var map: Map) extends GameEntity with Movable {
+           private var map: GameMap) extends GameEntity with Movable {
 
   private var position = initialPosition
   private var destinationPos = initialPosition

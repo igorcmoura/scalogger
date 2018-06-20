@@ -4,7 +4,7 @@ import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import scalogger.engine._
 
-class Car(initialPosition: Vector2, private var carType: CarType, private var map: Map) extends GameEntity with Spawnable[Car] {
+class Car(initialPosition: Vector2, private var carType: CarType, private var map: GameMap) extends GameEntity with Spawnable[Car] {
 
   private var position = initialPosition
 
