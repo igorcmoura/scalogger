@@ -5,7 +5,7 @@ import javafx.scene.layout.Pane
 import scalogger.engine.Direction._
 import scalogger.engine.Input.Button
 import scalogger.engine.Resources.Sprite
-import scalogger.engine.{Direction => _, _}
+import scalogger.engine._
 
 class Frog(initialPosition: Vector2,
            private var maxSpeed: Double,
