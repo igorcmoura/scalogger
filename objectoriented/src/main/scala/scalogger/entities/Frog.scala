@@ -17,11 +17,16 @@ class Frog(initialPosition: Vector2,
 
   private var riding: Rideable = _
 
-  private var jumping = false
   private var facingDirection = UP
   private val imageView = new ImageView()
   imageView.setFitWidth(map.gridSize)
   imageView.setFitHeight(map.gridSize)
+
+  object State extends Enumeration {
+    type State = Value
+    val IDLE, JUMPING = Value
+  }
+  private var state = State.IDLE
 
   override def attachToScreen(screen: Pane): Unit = {
     screen.getChildren.add(this.imageView)
@@ -38,13 +43,13 @@ class Frog(initialPosition: Vector2,
   }
 
   def jump(direction: Direction): Unit = {
-    if (!jumping) {
+    if (state == State.IDLE) {
       destinationPos = position + Vector2.unit(direction) * stepDistance
       if (!destinationPos.isInside(map.playableArea)) {
         return
       }
       facingDirection = direction
-      jumping = true
+      state = State.JUMPING
       // If riding something, stop riding it
       if (this.riding != null) {
         this.riding.unride(this)
@@ -62,7 +67,7 @@ class Frog(initialPosition: Vector2,
   }
 
   override def processInput(): Unit = {
-    if (!jumping) {
+    if (state == State.IDLE) {
       if (Input.getButtonDown(Button.MOVE_UP)) {
         this.jump(UP)
       } else if (Input.getButtonDown(Button.MOVE_DOWN)) {
@@ -84,7 +89,7 @@ class Frog(initialPosition: Vector2,
       }
     }
 
-    if (jumping) {
+    if (state == State.JUMPING) {
       val direction = (destinationPos - position).unit
       val movement = direction * maxSpeed * deltaTime
       this.move(movement)
@@ -95,7 +100,7 @@ class Frog(initialPosition: Vector2,
       }
 
       if (position == destinationPos) {
-        jumping = false
+        state = State.IDLE
 
         // If not riding anything, check if there's something to ride
         if (this.riding == null) {
@@ -116,7 +121,7 @@ class Frog(initialPosition: Vector2,
   }
 
   override def render(): Unit = {
-    if (jumping) {
+    if (state == State.JUMPING) {
       imageView.setImage(Sprite.FROG_JUMPING)
     } else {
       imageView.setImage(Sprite.FROG_IDLE)
