@@ -15,6 +15,8 @@ object Resources {
     val SPORTCAR_GREY = new Image("file:sprites/sportcar_grey.png")
     val TRUCK = new Image("file:sprites/truck.png")
 
+    val LOG = new Image("file:sprites/log.png")
+
     val SIDEWALK = new Image("file:sprites/sidewalk.png")
     val FINAL = new Image("file:sprites/final.png")
   }
