@@ -2,7 +2,7 @@ package scalogger.entities
 
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
-import scalogger.engine.{GameController, GameEntity, Spawnable, Vector2}
+import scalogger.engine._
 
 class Car(initialPosition: Vector2, private var carType: CarType, private var gridSize: Int) extends GameEntity with Spawnable[Car] {
 
@@ -13,6 +13,8 @@ class Car(initialPosition: Vector2, private var carType: CarType, private var gr
   imageView.setFitHeight(gridSize)
 
   override def spawn(): Car = new Car(this.position, this.carType, this.gridSize)
+
+  def getCollisionBox: Box = new Box(position.x - gridSize / 2, position.y - gridSize / 2.1, gridSize * carType.getSpriteSize, gridSize * 0.9)
 
   override def attachToScreen(screen: Pane): Unit = {
     screen.getChildren.add(this.imageView)

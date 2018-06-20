@@ -30,6 +30,8 @@ class Frog(initialPosition: Vector2,
     screen.getChildren.remove(this.imageView)
   }
 
+  def getCollisionBox: Box = new Box(position.x - gridSize / 2, position.y - gridSize / 2, gridSize, gridSize)
+
   def setStepDistance(stepDistance: Int): Unit = {
     this.stepDistance = stepDistance
   }
@@ -69,7 +71,13 @@ class Frog(initialPosition: Vector2,
   }
 
   override def update(deltaTime: Double): Unit = {
-    // TODO get enemies on map and check collision
+    val enemies = GameController.getGameEntities[Car]()
+    for (enemy <- enemies) {
+      if (enemy.getCollisionBox.collidesWith(this.getCollisionBox)) {
+        // TODO kill frog
+        println("Collided")
+      }
+    }
 
     if (jumping) {
       val direction = (destinationPos - position).unit
