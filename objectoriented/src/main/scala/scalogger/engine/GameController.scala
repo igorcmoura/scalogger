@@ -10,6 +10,7 @@ import scalogger.engine.Resources.Sprite
 import scalogger.entities.{Car, CarType, Frog}
 
 import scala.collection.mutable
+import scala.reflect.ClassTag
 
 object GameController {
 
@@ -97,6 +98,17 @@ object GameController {
   def removeGameEntity(entity: GameEntity): Unit = {
     entity.detachFromScreen(gameScreen)
     gameEntities -= entity
+  }
+
+  def getGameEntities[T <: GameEntity]()(implicit tag: ClassTag[T]): mutable.ListBuffer[T] = {
+    val returnList = new mutable.ListBuffer[T]()
+    for (entity <- gameEntities) {
+      entity match {
+        case t: T => returnList += t
+        case _ =>
+      }
+    }
+    returnList
   }
 
   def run(): Unit = {
