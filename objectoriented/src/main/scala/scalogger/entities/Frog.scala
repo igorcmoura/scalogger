@@ -16,6 +16,8 @@ class Frog(initialPosition: Vector2,
   private var destinationPos = initialPosition
   private var stepDistance = map.gridSize
 
+  private val notifier = new FrogNotifier
+
   private var riding: Rideable = _
 
   private var facingDirection = UP
@@ -37,6 +39,10 @@ class Frog(initialPosition: Vector2,
     screen.getChildren.remove(this.imageView)
   }
 
+  def addObserver(observer: Observer[FrogNotifier.Signals.Signals]): Unit = {
+    notifier.addObserver(observer)
+  }
+
   def getCollisionBox: Box = new Box(position.x - map.gridSize / 2, position.y - map.gridSize / 2, map.gridSize, map.gridSize)
 
   def setStepDistance(stepDistance: Int): Unit = {
@@ -51,6 +57,8 @@ class Frog(initialPosition: Vector2,
       }
       facingDirection = direction
       state = State.JUMPING
+      notifier.notifyJump(direction)
+
       // If riding something, stop riding it
       if (this.riding != null) {
         this.riding.unride(this)
