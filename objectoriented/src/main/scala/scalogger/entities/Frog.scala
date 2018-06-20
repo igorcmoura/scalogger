@@ -9,18 +9,17 @@ import scalogger.engine.{Direction => _, _}
 
 class Frog(initialPosition: Vector2,
            private var maxSpeed: Double,
-           private var gridSize: Int,
-           private var validArea: Box) extends GameEntity with Movable {
+           private var map: Map) extends GameEntity with Movable {
 
   private var position = initialPosition
   private var destinationPos = initialPosition
-  private var stepDistance = gridSize
+  private var stepDistance = map.gridSize
 
   private var jumping = false
   private var facingDirection = UP
   private val imageView = new ImageView()
-  imageView.setFitWidth(gridSize)
-  imageView.setFitHeight(gridSize)
+  imageView.setFitWidth(map.gridSize)
+  imageView.setFitHeight(map.gridSize)
 
   override def attachToScreen(screen: Pane): Unit = {
     screen.getChildren.add(this.imageView)
@@ -30,7 +29,7 @@ class Frog(initialPosition: Vector2,
     screen.getChildren.remove(this.imageView)
   }
 
-  def getCollisionBox: Box = new Box(position.x - gridSize / 2, position.y - gridSize / 2, gridSize, gridSize)
+  def getCollisionBox: Box = new Box(position.x - map.gridSize / 2, position.y - map.gridSize / 2, map.gridSize, map.gridSize)
 
   def setStepDistance(stepDistance: Int): Unit = {
     this.stepDistance = stepDistance
@@ -39,7 +38,7 @@ class Frog(initialPosition: Vector2,
   def jump(direction: Direction): Unit = {
     if (!jumping) {
       destinationPos = position + Vector2.unit(direction) * stepDistance
-      if (!destinationPos.isInside(validArea)) {
+      if (!destinationPos.isInside(map.playableArea)) {
         return
       }
       facingDirection = direction

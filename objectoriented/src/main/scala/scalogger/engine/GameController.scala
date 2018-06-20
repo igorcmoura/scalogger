@@ -16,25 +16,29 @@ object GameController {
 
   private val gameEntities = new mutable.ListBuffer[GameEntity]()
 
-  private val gridSize = 16
-  private val gridWidth = 14
-
   private var gameScreen: Pane = _
+  private var map: Map = _
 
   private var score: Long = 0
 
   def initialize(pane: Pane): Unit = {
     gameScreen = pane
+
+    val gridSize = 16
+    val mapWidth = 14
+    val playableArea = new Box(0, 2, mapWidth, 13) * gridSize
+    val waterArea = new Box(0, 1.2, mapWidth, 7) * gridSize
+    map = new Map(gridSize, mapWidth, playableArea, waterArea)
+
     val scoreText = new Text()
 
     this.initScoreText(scoreText)
     pane.getChildren.add(scoreText)
 
-    renderMap()
+    map.render(gameScreen)
     createSpawners()
 
-    val gridArea = new Box(0, 2, gridWidth, 13) * gridSize
-    addGameEntity(new Frog(new Vector2(7.5 * gridSize, 14.5 * gridSize), 0.2, gridSize, gridArea))
+    addGameEntity(new Frog(new Vector2(7.5 * map.gridSize, 14.5 * map.gridSize), 0.2, map))
   }
 
   private def addScore(value: Long): Unit = {
@@ -45,43 +49,19 @@ object GameController {
     scoreText.setText("SCORE: " + score.toString)
     scoreText.setFont(Font.font("Verdana", 20))
     scoreText.setFill(Color.WHITE)
-    scoreText.setX(1 * gridSize)
-    scoreText.setY(1 * gridSize)
+    scoreText.setX(1 * map.gridSize)
+    scoreText.setY(1 * map.gridSize)
   }
 
-  private def renderMap(): Unit = {
-    val water = (new Box(0, 1.2, gridWidth, 7) * gridSize).toRectangle
-    water.setFill(Color.DARKBLUE)
-    gameScreen.getChildren.add(water)
 
-    this.renderSideWalk(8)
-    this.renderSideWalk(14)
 
-    val finalView = new ImageView(Sprite.FINAL)
-    finalView.setFitWidth(gridSize * gridWidth)
-    finalView.setFitHeight(gridSize * 2)
-    finalView.setX(0)
-    finalView.setY(1 * gridSize)
-    gameScreen.getChildren.add(finalView)
-  }
-
-  private def renderSideWalk(lane: Double): Unit = {
-    for (i <- 0 until gridWidth) {
-      val sideWalkView = new ImageView(Sprite.SIDEWALK)
-      sideWalkView.setFitWidth(gridSize)
-      sideWalkView.setFitHeight(gridSize)
-      sideWalkView.setX(i * gridSize)
-      sideWalkView.setY(lane * gridSize)
-      gameScreen.getChildren.add(sideWalkView)
-    }
-  }
 
   private def createSpawners(): Unit = {
-    val truck = new Car(new Vector2(14.5 * gridSize, 9.5 * gridSize), new CarType(Sprite.TRUCK, 2, 0.03, LEFT), gridSize)
-    val greySportCar = new Car(new Vector2(-0.5 * gridSize, 10.5 * gridSize), new CarType(Sprite.SPORTCAR_GREY, 1, 0.02, RIGHT), gridSize)
-    val car = new Car(new Vector2(14.5 * gridSize, 11.5 * gridSize), new CarType(Sprite.CAR, 1, 0.013, LEFT), gridSize)
-    val bulldozer = new Car(new Vector2(-0.5 * gridSize, 12.5 * gridSize), new CarType(Sprite.BULLDOZER, 1, 0.01, RIGHT), gridSize)
-    val yellowSportCar = new Car(new Vector2(14.5 * gridSize, 13.5 * gridSize), new CarType(Sprite.SPORTCAR_YELLOW, 1, 0.01, LEFT), gridSize)
+    val truck = new Car(new Vector2(14.5 * map.gridSize, 9.5 * map.gridSize), new CarType(Sprite.TRUCK, 2, 0.03, LEFT), map)
+    val greySportCar = new Car(new Vector2(-0.5 * map.gridSize, 10.5 * map.gridSize), new CarType(Sprite.SPORTCAR_GREY, 1, 0.02, RIGHT), map)
+    val car = new Car(new Vector2(14.5 * map.gridSize, 11.5 * map.gridSize), new CarType(Sprite.CAR, 1, 0.013, LEFT), map)
+    val bulldozer = new Car(new Vector2(-0.5 * map.gridSize, 12.5 * map.gridSize), new CarType(Sprite.BULLDOZER, 1, 0.01, RIGHT), map)
+    val yellowSportCar = new Car(new Vector2(14.5 * map.gridSize, 13.5 * map.gridSize), new CarType(Sprite.SPORTCAR_YELLOW, 1, 0.01, LEFT), map)
 
     addGameEntity(new Spawner(truck, 3000, 6000))
     addGameEntity(new Spawner(greySportCar, 10000, 12000))
