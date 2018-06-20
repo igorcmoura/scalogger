@@ -3,8 +3,12 @@ package scalogger.managers
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.scene.text.{Font, Text}
+import scalogger.engine.Observer
+import scalogger.entities.FrogNotifier
+import scalogger.entities.FrogNotifier.Signals
+import scalogger.entities.FrogNotifier.Signals.Signals
 
-class ScoreManager(map: GameMap) {
+class ScoreManager(map: GameMap) extends Observer[FrogNotifier.Signals.Signals] {
 
   private var score = 0
 
@@ -26,5 +30,13 @@ class ScoreManager(map: GameMap) {
 
   def render(screen: Pane): Unit = {
     screen.getChildren.add(scoreText)
+  }
+
+  override def onNotify(signal: Signals): Unit = {
+    signal match {
+      case Signals.JUMP_UP => addScore(10)
+      case Signals.JUMP_DOWN => addScore(-10)
+      case _ =>
+    }
   }
 }

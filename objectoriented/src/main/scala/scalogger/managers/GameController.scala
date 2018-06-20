@@ -33,7 +33,9 @@ object GameController {
     scoreManager.render(gameScreen)
     createSpawners()
 
-    addGameEntity(new Frog(new Vector2(7.5 * map.gridSize, 14.5 * map.gridSize), 0.2, map))
+    val frog = new Frog(new Vector2(7.5 * map.gridSize, 14.5 * map.gridSize), 0.2, map)
+    frog.addObserver(scoreManager)
+    addGameEntity(frog)
   }
 
   private def createSpawners(): Unit = {
