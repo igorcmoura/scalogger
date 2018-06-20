@@ -60,11 +60,20 @@ class Frog(initialPosition: Vector2,
       notifier.notifyJump(direction)
 
       // If riding something, stop riding it
-      if (this.riding != null) {
-        this.riding.unride(this)
-        this.riding = null
-      }
+      unride()
     }
+  }
+
+  def ride(rideable: Rideable): Unit = {
+    unride()
+    this.riding = rideable
+    rideable.ride(this)
+  }
+
+  def unride(): Unit = {
+    if (this.riding == null) return
+    this.riding.unride(this)
+    this.riding = null
   }
 
   override def move(movement: Vector2): Unit = {
@@ -116,12 +125,7 @@ class Frog(initialPosition: Vector2,
           val rideables = GameController.getGameEntities[Rideable]()
           for (rideable <- rideables) {
             if (rideable.getCollisionBox.collidesWith(this.getCollisionBox)) {
-              if (this.riding != null) {
-                this.riding.unride(this)
-              }
-
-              this.riding = rideable
-              rideable.ride(this)
+              ride(rideable)
             }
           }
         }
