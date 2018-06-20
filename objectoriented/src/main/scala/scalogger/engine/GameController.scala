@@ -1,10 +1,7 @@
 package scalogger.engine
 
 import javafx.animation.AnimationTimer
-import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
-import javafx.scene.paint.Color
-import javafx.scene.text.{Font, Text}
 import scalogger.engine.Direction.{LEFT, RIGHT}
 import scalogger.engine.Resources.Sprite
 import scalogger.entities._
@@ -18,8 +15,7 @@ object GameController {
 
   private var gameScreen: Pane = _
   private var map: GameMap = _
-
-  private var score: Long = 0
+  private var scoreManager: ScoreManager = _
 
   def initialize(pane: Pane): Unit = {
     gameScreen = pane
@@ -30,27 +26,13 @@ object GameController {
     val waterArea = new Box(0, 1.2, mapWidth, 7) * gridSize
     map = new GameMap(gridSize, mapWidth, playableArea, waterArea)
 
-    val scoreText = new Text()
-
-    this.initScoreText(scoreText)
-    pane.getChildren.add(scoreText)
+    scoreManager = new ScoreManager(map)
 
     map.render(gameScreen)
+    scoreManager.render(gameScreen)
     createSpawners()
 
     addGameEntity(new Frog(new Vector2(7.5 * map.gridSize, 14.5 * map.gridSize), 0.2, map))
-  }
-
-  private def addScore(value: Long): Unit = {
-    score += value
-  }
-
-  private def initScoreText(scoreText: Text): Unit = {
-    scoreText.setText("SCORE: " + score.toString)
-    scoreText.setFont(Font.font("Verdana", 20))
-    scoreText.setFill(Color.WHITE)
-    scoreText.setX(1 * map.gridSize)
-    scoreText.setY(1 * map.gridSize)
   }
 
   private def createSpawners(): Unit = {
