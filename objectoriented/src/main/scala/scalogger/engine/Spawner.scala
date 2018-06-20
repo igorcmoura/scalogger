@@ -1,6 +1,7 @@
 package scalogger.engine
 
 import javafx.scene.layout.Pane
+import scalogger.managers.GameController
 
 import scala.util.Random
 

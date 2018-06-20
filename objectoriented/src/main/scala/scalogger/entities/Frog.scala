@@ -3,9 +3,10 @@ package scalogger.entities
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import scalogger.engine.Direction._
-import scalogger.engine.Input.Button
-import scalogger.engine.Resources.Sprite
+import scalogger.managers.Input.Button
+import scalogger.managers.Resources.Sprite
 import scalogger.engine._
+import scalogger.managers.{GameController, GameMap, Input}
 
 class Frog(initialPosition: Vector2,
            private var maxSpeed: Double,

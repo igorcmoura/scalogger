@@ -1,9 +1,10 @@
-package scalogger.engine
+package scalogger.managers
 
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
-import scalogger.engine.Resources.Sprite
+import scalogger.engine.Box
+import scalogger.managers.Resources.Sprite
 
 class GameMap(private val _gridSize: Int, private val _mapWidth: Int, private val _playableArea: Box, private val _waterArea: Box) {
   def gridSize: Int = _gridSize

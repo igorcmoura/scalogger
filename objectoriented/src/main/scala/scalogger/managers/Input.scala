@@ -1,4 +1,4 @@
-package scalogger.engine
+package scalogger.managers
 
 import javafx.event.{EventHandler, EventType}
 import javafx.scene.Scene

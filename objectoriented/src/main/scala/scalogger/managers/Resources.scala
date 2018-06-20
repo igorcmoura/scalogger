@@ -1,4 +1,4 @@
-package scalogger.engine
+package scalogger.managers
 
 import javafx.scene.image.Image
 

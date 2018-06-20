@@ -5,7 +5,7 @@ import javafx.scene.Scene
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.stage.Stage
-import scalogger.engine.{GameController, Input}
+import scalogger.managers.{GameController, Input}
 
 object Main {
   def main(args: Array[String]): Unit = {

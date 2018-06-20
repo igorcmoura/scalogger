@@ -1,10 +1,11 @@
-package scalogger.engine
+package scalogger.managers
 
 import javafx.animation.AnimationTimer
 import javafx.scene.layout.Pane
 import scalogger.engine.Direction.{LEFT, RIGHT}
-import scalogger.engine.Resources.Sprite
+import scalogger.engine._
 import scalogger.entities._
+import scalogger.managers.Resources.Sprite
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
