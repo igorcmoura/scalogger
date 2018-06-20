@@ -101,6 +101,7 @@ class Frog(initialPosition: Vector2,
     } else {
       imageView.setImage(Sprite.FROG_IDLE)
     }
+    imageView.toFront()
     imageView.setX(position.x - stepDistance / 2)
     imageView.setY(position.y - stepDistance / 2)
     facingDirection match {
