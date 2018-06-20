@@ -80,7 +80,7 @@ object GameController {
     gameEntities -= entity
   }
 
-  def getGameEntities[T <: GameEntity]()(implicit tag: ClassTag[T]): mutable.ListBuffer[T] = {
+  def getGameEntities[T]()(implicit tag: ClassTag[T]): mutable.ListBuffer[T] = {
     val returnList = new mutable.ListBuffer[T]()
     for (entity <- gameEntities) {
       entity match {

@@ -15,6 +15,8 @@ class Frog(initialPosition: Vector2,
   private var destinationPos = initialPosition
   private var stepDistance = map.gridSize
 
+  private var riding: Rideable = _
+
   private var jumping = false
   private var facingDirection = UP
   private val imageView = new ImageView()
@@ -43,7 +45,11 @@ class Frog(initialPosition: Vector2,
       }
       facingDirection = direction
       jumping = true
-      // TODO stop riding rideable
+      // If riding something, stop riding it
+      if (this.riding != null) {
+        this.riding.unride(this)
+        this.riding = null
+      }
     }
   }
 
@@ -90,7 +96,21 @@ class Frog(initialPosition: Vector2,
 
       if (position == destinationPos) {
         jumping = false
-        // TODO get rideables on map and check collision
+
+        // If not riding anything, check if there's something to ride
+        if (this.riding == null) {
+          val rideables = GameController.getGameEntities[Rideable]()
+          for (rideable <- rideables) {
+            if (rideable.getCollisionBox.collidesWith(this.getCollisionBox)) {
+              if (this.riding != null) {
+                this.riding.unride(this)
+              }
+
+              this.riding = rideable
+              rideable.ride(this)
+            }
+          }
+        }
       }
     }
   }
