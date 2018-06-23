@@ -60,7 +60,6 @@ class Frog(initialPosition: Vector2,
       }
       facingDirection = direction
       state = State.JUMPING
-      notifier.notifyJump(direction)
 
       // If riding something, stop riding it
       unride()
@@ -136,6 +135,7 @@ class Frog(initialPosition: Vector2,
 
       if (position == destinationPos) {
         state = State.IDLE
+        notifier.notifyJump(facingDirection)
 
         // If not riding anything, check if there's something to ride
         if (this.riding == null) {
