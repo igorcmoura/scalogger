@@ -189,8 +189,8 @@ class Frog(initialPosition: Vector2,
       }
     }
     imageView.toFront()
-    imageView.setX(position.x - stepDistance / 2)
-    imageView.setY(position.y - stepDistance / 2)
+    imageView.setX(position.x - map.gridSize / 2)
+    imageView.setY(position.y - map.gridSize / 2)
     facingDirection match {
       case UP => imageView.setRotate(0)
       case DOWN => imageView.setRotate(180)
