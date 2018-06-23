@@ -20,6 +20,9 @@ class Frog(initialPosition: Vector2,
 
   private var riding: Rideable = _
 
+  private val deathCounterInit: Double = 2000
+  private var deathCounter = deathCounterInit
+
   private var facingDirection = UP
   private val imageView = new ImageView()
   imageView.setFitWidth(map.gridSize)
@@ -27,7 +30,7 @@ class Frog(initialPosition: Vector2,
 
   object State extends Enumeration {
     type State = Value
-    val IDLE, JUMPING = Value
+    val IDLE, JUMPING, DEAD, DROWNED = Value
   }
   private var state = State.IDLE
 
@@ -62,6 +65,16 @@ class Frog(initialPosition: Vector2,
       // If riding something, stop riding it
       unride()
     }
+  }
+
+  def die(): Unit = {
+    state = State.DEAD
+    notifier.notifyDeath()
+  }
+
+  def drown(): Unit = {
+    state = State.DROWNED
+    notifier.notifyDeath()
   }
 
   def ride(rideable: Rideable): Unit = {
@@ -102,9 +115,13 @@ class Frog(initialPosition: Vector2,
     val enemies = GameController.getGameEntities[Car]()
     for (enemy <- enemies) {
       if (enemy.getCollisionBox.collidesWith(this.getCollisionBox)) {
-        // TODO kill frog
-        println("Collided")
+        die()
       }
+    }
+
+    if (!this.position.isInside(map.playableArea)) {
+      unride()
+      die()
     }
 
     if (state == State.JUMPING) {
@@ -129,15 +146,38 @@ class Frog(initialPosition: Vector2,
             }
           }
         }
+
+        // If it's on the water and not riding anything, kills the frog
+        if (this.position.isInside(map.waterArea) && this.riding == null) {
+          drown()
+        }
+      }
+    }
+
+    if (state == State.DEAD || state == State.DROWNED) {
+      deathCounter -= deltaTime
+      if (deathCounter < 0) {
+        this.position = initialPosition
+        this.state = State.IDLE
+        this.deathCounter = deathCounterInit
       }
     }
   }
 
   override def render(): Unit = {
-    if (state == State.JUMPING) {
-      imageView.setImage(Sprite.FROG_JUMPING)
-    } else {
-      imageView.setImage(Sprite.FROG_IDLE)
+    state match {
+      case State.IDLE => imageView.setImage(Sprite.FROG_IDLE)
+      case State.JUMPING => imageView.setImage(Sprite.FROG_JUMPING)
+      case State.DEAD => {
+        val index: Int = if (deathCounter <= 0) 3 else (4 - (deathCounter * 4 / deathCounterInit)).toInt
+        facingDirection = UP
+        imageView.setImage(Seq(Sprite.FROG_DEATH_1, Sprite.FROG_DEATH_2, Sprite.FROG_DEATH_3, Sprite.SKULL)(index))
+      }
+      case State.DROWNED => {
+        val index: Int = if (deathCounter <= 0) 3 else (4 - (deathCounter * 4 / deathCounterInit)).toInt
+        facingDirection = UP
+        imageView.setImage(Seq(Sprite.FROG_DROWNING_1, Sprite.FROG_DROWNING_2, Sprite.FROG_DROWNING_3, Sprite.SKULL)(index))
+      }
     }
     imageView.toFront()
     imageView.setX(position.x - stepDistance / 2)
