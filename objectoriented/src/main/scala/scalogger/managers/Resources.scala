@@ -27,9 +27,13 @@ object Resources {
     val TURTLE_1 = new Image("file:sprites/turtle_1.png")
     val TURTLE_2 = new Image("file:sprites/turtle_2.png")
     val TURTLE_3 = new Image("file:sprites/turtle_3.png")
+    val TURTLE_DIVE_1 = new Image("file:sprites/turtle_dive_1.png")
+    val TURTLE_DIVE_2 = new Image("file:sprites/turtle_dive_2.png")
 
     val SIDEWALK = new Image("file:sprites/sidewalk.png")
     val FINAL = new Image("file:sprites/final.png")
+
+    val VOID = new Image("file:sprites/void.png")
   }
 
 }
