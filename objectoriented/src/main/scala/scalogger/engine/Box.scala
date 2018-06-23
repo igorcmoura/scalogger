@@ -11,13 +11,12 @@ class Box(val x: Double, val y: Double, val width: Double, val height: Double) {
 
   def middle = new Vector2(x + (width / 2), y + (height / 2))
 
-  def collidesWith(other: Box): Boolean =
-    new Vector2(x, y).isInside(other) ||
-      new Vector2(x + width, y).isInside(other) ||
-      new Vector2(x, y + height).isInside(other) ||
-      new Vector2(x + width, y + height).isInside(other) ||
-      new Vector2(middle.x, middle.y).isInside(other) ||
-      new Vector2(other.middle.x, other.middle.y).isInside(this)
+  def collidesWith(other: Box): Boolean = !(isAbove(other) || isBelow(other) || isAtTheLeft(other) || isAtTheRight(other))
+
+  private def isAbove(other: Box) = this.y + height < other.y
+  private def isBelow(other: Box) = this.y > other.y + other.height
+  private def isAtTheLeft(other: Box) = this.x + width < other.x
+  private def isAtTheRight(other: Box) = this.x > other.x + other.width
 
   def toRectangle = new Rectangle(this.x, this.y, this.width, this.height)
 }
