@@ -46,7 +46,12 @@ class Frog(initialPosition: Vector2,
     notifier.addObserver(observer)
   }
 
-  def getCollisionBox: Box = new Box(position.x - map.gridSize / 2, position.y - map.gridSize / 2, map.gridSize, map.gridSize)
+  def getCollisionBox: Box = new Box(
+    position.x - (0.75 * map.gridSize / 2),
+    position.y - (0.75 * map.gridSize / 2),
+    0.75 * map.gridSize,
+    0.75 * map.gridSize
+  )
 
   def setStepDistance(stepDistance: Int): Unit = {
     this.stepDistance = stepDistance
