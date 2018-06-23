@@ -10,7 +10,7 @@ import scalogger.managers.{GameController, GameMap, Input}
 
 class Frog(initialPosition: Vector2,
            private var maxSpeed: Double,
-           private var map: GameMap) extends GameEntity with Movable {
+           private var map: GameMap) extends GameEntity with Rider {
 
   private var position = initialPosition
   private var destinationPos = initialPosition
@@ -67,7 +67,7 @@ class Frog(initialPosition: Vector2,
       state = State.JUMPING
 
       // If riding something, stop riding it
-      unride()
+      getOff()
     }
   }
 
@@ -82,14 +82,14 @@ class Frog(initialPosition: Vector2,
   }
 
   def ride(rideable: Rideable): Unit = {
-    unride()
+    getOff()
     this.riding = rideable
-    rideable.ride(this)
+    rideable.carry(this)
   }
 
-  def unride(): Unit = {
+  override def getOff(): Unit = {
     if (this.riding == null) return
-    this.riding.unride(this)
+    this.riding.drop(this)
     this.riding = null
   }
 
@@ -124,7 +124,7 @@ class Frog(initialPosition: Vector2,
     }
 
     if (!this.position.isInside(map.playableArea)) {
-      unride()
+      getOff()
       die()
     }
 

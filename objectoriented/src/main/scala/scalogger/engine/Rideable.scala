@@ -1,13 +1,13 @@
 package scalogger.engine
 
 abstract class Rideable extends GameEntity {
-  protected var carrying: Movable = _
+  protected var carrying: Rider = _
 
-  def ride(movable: Movable): Unit = {
-    this.carrying = movable
+  def carry(rider: Rider): Unit = {
+    this.carrying = rider
   }
 
-  def unride(movable: Movable): Unit = {
+  def drop(movable: Rider): Unit = {
     this.carrying = null
   }
 
