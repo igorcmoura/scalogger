@@ -10,7 +10,7 @@ import scalogger.managers.{GameController, GameMap}
 class Turtles(initialPosition: Vector2,
               private var size: Int,
               private var speed: Double,
-              private var animationTime: Double,
+              private var spriteTime: Double,
               private var map: GameMap) extends Rideable with Spawnable[Turtles] {
   private var position = initialPosition
 
@@ -21,9 +21,9 @@ class Turtles(initialPosition: Vector2,
   }
   private val images = Seq(Sprite.TURTLE_1, Sprite.TURTLE_2, Sprite.TURTLE_3)
   private var currentImageIdx = 0
-  private var nextImageTime = animationTime / images.size
+  private var nextImageTime = spriteTime
 
-  override def spawn(): Turtles = new Turtles(this.position, this.size, this.speed, this.animationTime, this.map)
+  override def spawn(): Turtles = new Turtles(this.position, this.size, this.speed, this.spriteTime, this.map)
 
   override def attachToScreen(screen: Pane): Unit = {
     for (imageView <- imageViews) {
@@ -52,7 +52,7 @@ class Turtles(initialPosition: Vector2,
   override def render(): Unit = {
     if (nextImageTime <= 0) {
       currentImageIdx = (currentImageIdx + 1) % images.size
-      nextImageTime = animationTime / images.size
+      nextImageTime = spriteTime
     }
     for ((imageView, index) <- imageViews.zipWithIndex) {
       imageView.setX(position.x + (map.gridSize * index) - (map.gridSize / 2))

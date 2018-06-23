@@ -43,8 +43,8 @@ object GameController {
     val mediumLog = new Log(new Vector2(-3.5 * map.gridSize, 3.5 * map.gridSize), 2, 0.013, map)
     val longLog = new Log(new Vector2(-4.5 * map.gridSize, 4.5 * map.gridSize), 3, 0.045, map)
 
-    val twoTurtles = new Turtles(new Vector2(14.5 * map.gridSize, 5.5 * map.gridSize), 2, 0.03, 1000, map)
-    val threeTurtles = new Turtles(new Vector2(14.5 * map.gridSize, 7.5 * map.gridSize), 3, 0.03, 1000, map)
+    val twoTurtles = new Turtles(new Vector2(14.5 * map.gridSize, 5.5 * map.gridSize), 2, 0.03, 400, map)
+    val threeTurtles = new Turtles(new Vector2(14.5 * map.gridSize, 7.5 * map.gridSize), 3, 0.03, 400, map)
 
     val car = new Car(new Vector2(14.5 * map.gridSize, 11.5 * map.gridSize), new CarType(Sprite.CAR, 1, 0.013, LEFT), map)
     val greySportCar = new Car(new Vector2(-0.5 * map.gridSize, 10.5 * map.gridSize), new CarType(Sprite.SPORTCAR_GREY, 1, 0.02, RIGHT), map)
