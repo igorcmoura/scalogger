@@ -8,7 +8,7 @@ import scalogger.entities.{Frog, FrogNotifier}
 import scalogger.entities.FrogNotifier.Signals
 import scalogger.entities.FrogNotifier.Signals.Signals
 
-class ScoreManager(map: GameMap, frog: Frog) {
+class ScoreManager(gridSize: Int, frog: Frog) {
 
   private var score = 0
   private val scoreText = new Text()
@@ -19,7 +19,7 @@ class ScoreManager(map: GameMap, frog: Frog) {
     scoreText.setFont(Font.font("Verdana", 20))
     scoreText.setFill(Color.WHITE)
     scoreText.setX(0)
-    scoreText.setY(1 * map.gridSize)
+    scoreText.setY(1 * gridSize)
     updateText()
 
     val frogObserver = new Observer[FrogNotifier.Signals.Signals] {

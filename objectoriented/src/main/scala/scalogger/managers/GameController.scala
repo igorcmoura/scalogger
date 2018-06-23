@@ -29,7 +29,7 @@ object GameController {
 
     val frog = new Frog(new Vector2(7.5 * map.gridSize, 14.5 * map.gridSize), 0.2, map)
 
-    scoreManager = new ScoreManager(map, frog)
+    scoreManager = new ScoreManager(gridSize, frog)
 
     map.render(gameScreen)
     scoreManager.render(gameScreen)
