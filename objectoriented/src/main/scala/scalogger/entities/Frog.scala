@@ -128,43 +128,47 @@ class Frog(initialPosition: Vector2,
       die()
     }
 
-    if (state == State.JUMPING) {
-      val direction = (destinationPos - position).unit
-      val movement = direction * maxSpeed * deltaTime
-      this.move(movement)
-
-      // If direction changed then it surpassed the destination position
-      if (direction != (destinationPos - position).unit) {
-        this.moveTo(destinationPos)
-      }
-
-      if (position == destinationPos) {
-        state = State.IDLE
-        notifier.notifyJump(facingDirection)
-
-        // If not riding anything, check if there's something to ride
-        if (this.riding == null) {
-          val rideables = GameController.getGameEntities[Rideable]()
-          for (rideable <- rideables) {
-            if (rideable.getCollisionBox.collidesWith(this.getCollisionBox)) {
-              ride(rideable)
-            }
-          }
-        }
-
+    state match {
+      case State.IDLE => {
         // If it's on the water and not riding anything, kills the frog
         if (this.position.isInside(map.waterArea) && this.riding == null) {
           drown()
         }
       }
-    }
 
-    if (state == State.DEAD || state == State.DROWNED) {
-      deathCounter -= deltaTime
-      if (deathCounter < 0) {
-        this.position = initialPosition
-        this.state = State.IDLE
-        this.deathCounter = deathCounterInit
+      case State.JUMPING => {
+        val direction = (destinationPos - position).unit
+        val movement = direction * maxSpeed * deltaTime
+        this.move(movement)
+
+        // If direction changed then it surpassed the destination position
+        if (direction != (destinationPos - position).unit) {
+          this.moveTo(destinationPos)
+        }
+
+        if (position == destinationPos) {
+          state = State.IDLE
+          notifier.notifyJump(facingDirection)
+
+          // If not riding anything, check if there's something to ride
+          if (this.riding == null) {
+            val rideables = GameController.getGameEntities[Rideable]()
+            for (rideable <- rideables) {
+              if (rideable.getCollisionBox.collidesWith(this.getCollisionBox)) {
+                ride(rideable)
+              }
+            }
+          }
+        }
+      }
+
+      case State.DEAD | State.DROWNED => {
+        deathCounter -= deltaTime
+        if (deathCounter < 0) {
+          this.position = initialPosition
+          this.state = State.IDLE
+          this.deathCounter = deathCounterInit
+        }
       }
     }
   }
