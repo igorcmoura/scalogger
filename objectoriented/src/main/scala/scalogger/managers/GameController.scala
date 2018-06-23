@@ -27,14 +27,14 @@ object GameController {
     val waterArea = new Box(0, 1.2, mapWidth, 7) * gridSize
     map = new GameMap(gridSize, mapWidth, playableArea, waterArea)
 
-    scoreManager = new ScoreManager(map)
+    val frog = new Frog(new Vector2(7.5 * map.gridSize, 14.5 * map.gridSize), 0.2, map)
+
+    scoreManager = new ScoreManager(map, frog)
 
     map.render(gameScreen)
     scoreManager.render(gameScreen)
     createSpawners()
 
-    val frog = new Frog(new Vector2(7.5 * map.gridSize, 14.5 * map.gridSize), 0.2, map)
-    frog.addObserver(scoreManager)
     addGameEntity(frog)
   }
 
