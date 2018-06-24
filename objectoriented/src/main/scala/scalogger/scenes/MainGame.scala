@@ -57,7 +57,7 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
   }
 
   private def createSpawners(map: GameMap): Unit = {
-    val shortLog = new Log(new Vector2(-2.5 * map.gridSize, 6.5 * map.gridSize), 1, 0.007, map)
+    val shortLog = new Log(new Vector2(-2.5 * map.gridSize, 6.5 * map.gridSize), 1, 0.01, map)
     val mediumLog = new Log(new Vector2(-3.5 * map.gridSize, 3.5 * map.gridSize), 2, 0.013, map)
     val longLog = new Log(new Vector2(-4.5 * map.gridSize, 4.5 * map.gridSize), 3, 0.045, map)
 
