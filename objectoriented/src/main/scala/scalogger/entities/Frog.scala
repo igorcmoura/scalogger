@@ -71,6 +71,13 @@ class Frog(initialPosition: Vector2,
     }
   }
 
+  private def reset(): Unit = {
+    this.getOff()
+    this.position = initialPosition
+    this.state = State.IDLE
+    this.deathCounter = deathCounterInit
+  }
+
   def die(): Unit = {
     state = State.DEAD
     notifier.notifyDeath()
@@ -116,9 +123,19 @@ class Frog(initialPosition: Vector2,
   }
 
   override def update(deltaTime: Double): Unit = {
+    val thisCollisionBox = this.getCollisionBox
+
+    val goals = GameController.getGameEntities[Goal]()
+    for (goal <- goals) {
+      if (!goal.captured && goal.getCollisionBox.collidesWith(thisCollisionBox)) {
+        goal.capture()
+        this.reset()
+      }
+    }
+
     val enemies = GameController.getGameEntities[Car]()
     for (enemy <- enemies) {
-      if (enemy.getCollisionBox.collidesWith(this.getCollisionBox)) {
+      if (enemy.getCollisionBox.collidesWith(thisCollisionBox)) {
         die()
       }
     }
@@ -165,9 +182,7 @@ class Frog(initialPosition: Vector2,
       case State.DEAD | State.DROWNED => {
         deathCounter -= deltaTime
         if (deathCounter < 0) {
-          this.position = initialPosition
-          this.state = State.IDLE
-          this.deathCounter = deathCounterInit
+          this.reset()
         }
       }
     }
