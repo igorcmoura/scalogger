@@ -16,10 +16,10 @@ class ScoreManager(gridSize: Int, frog: Frog, goals: Traversable[Goal]) {
   initialize()
 
   private def initialize(): Unit = {
-    scoreText.setFont(Font.font("Verdana", 20))
+    scoreText.setFont(Font.font("Verdana", 10))
     scoreText.setFill(Color.WHITE)
-    scoreText.setX(0)
-    scoreText.setY(1 * gridSize)
+    scoreText.setX(0.2 * gridSize)
+    scoreText.setY(0.9 * gridSize)
     updateText()
 
     val frogObserver = new Observer[FrogNotifier.Signals.Signals] {
