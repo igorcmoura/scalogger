@@ -21,6 +21,8 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
   }
 
   private def createScene(): Scene = {
+    GameController.clear()
+
     val gameScreen = new Pane()
     gameScreen.setScaleX(screenScale)
     gameScreen.setScaleY(screenScale)

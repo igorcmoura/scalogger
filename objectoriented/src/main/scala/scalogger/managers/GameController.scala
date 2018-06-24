@@ -13,8 +13,36 @@ object GameController {
 
   private var gameScreen: Pane = _
 
+  private var lastTime: Long = 0
+  private val animator = new AnimationTimer() {
+    override def handle(now: Long): Unit = {
+      val nowMilliSec = now / 1000000
+      if (lastTime == 0) {
+        lastTime = nowMilliSec
+      }
+      for (entity <- gameEntities) {
+        entity.processInput()
+      }
+      Input.update()
+      for (entity <- gameEntities) {
+        entity.update(nowMilliSec - lastTime)
+      }
+      for (entity <- gameEntities) {
+        entity.render()
+      }
+      lastTime = nowMilliSec
+    }
+  }
+
   def setGameScreen(pane: Pane): Unit = {
     gameScreen = pane
+  }
+
+  def clear(): Unit = {
+    gameEntities.clear()
+    gameScreen = null
+    animator.stop()
+    lastTime = 0
   }
 
   def addGameEntity(entity: GameEntity): Unit = {
@@ -39,27 +67,6 @@ object GameController {
   }
 
   def run(): Unit = {
-    var lastTime: Long = 0
-
-    val animator = new AnimationTimer() {
-      override def handle(now: Long): Unit = {
-        val nowMilliSec = now / 1000000
-        if (lastTime == 0) {
-          lastTime = nowMilliSec
-        }
-        for (entity <- gameEntities) {
-          entity.processInput()
-        }
-        Input.update()
-        for (entity <- gameEntities) {
-          entity.update(nowMilliSec - lastTime)
-        }
-        for (entity <- gameEntities) {
-          entity.render()
-        }
-        lastTime = nowMilliSec
-      }
-    }
     animator.start()
   }
 }
