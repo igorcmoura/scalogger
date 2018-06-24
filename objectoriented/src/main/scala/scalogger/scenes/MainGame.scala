@@ -49,7 +49,6 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
 
     val scene = new Scene(gameScreen, SCREEN_WIDTH * screenScale, SCREEN_HEIGHT * screenScale, Color.BLACK)
     Input.initialize(scene)
-    GameController.setGameScreen(gameScreen)
     scene
   }
 
