@@ -80,12 +80,10 @@ class Frog(initialPosition: Vector2,
 
   private def die(): Unit = {
     state = State.DEAD
-    notifier.notifyDeath()
   }
 
   private def drown(): Unit = {
     state = State.DROWNED
-    notifier.notifyDeath()
   }
 
   override def ride(rideable: Rideable): Unit = {
@@ -182,6 +180,7 @@ class Frog(initialPosition: Vector2,
       case State.DEAD | State.DROWNED => {
         deathCounter -= deltaTime
         if (deathCounter < 0) {
+          this.notifier.notifyDeath()
           this.reset()
         }
       }
