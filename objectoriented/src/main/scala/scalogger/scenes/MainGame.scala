@@ -6,13 +6,11 @@ import javafx.scene.paint.Color
 import scalogger.engine.Direction.{LEFT, RIGHT}
 import scalogger.engine.{Box, Spawner, Vector2}
 import scalogger.entities._
+import scalogger.managers.Constants.{SCREEN_HEIGHT, SCREEN_WIDTH}
 import scalogger.managers.Resources.Sprite
 import scalogger.managers.{GameController, GameMap, Input, ScoreManager}
 
 class MainGame(screenScale: Int) {
-  private val WIDTH = 224
-  private val HEIGHT = 256
-
   private val scene = createScene()
 
   def getScene: Scene = this.scene
@@ -26,8 +24,8 @@ class MainGame(screenScale: Int) {
     gameScreen.setScaleX(screenScale)
     gameScreen.setScaleY(screenScale)
     val panePosition = screenScale * (screenScale - 1) / 2 // For some reason, when scaled, the pane moves on an arithmetic progressive distance
-    gameScreen.setTranslateX(WIDTH * panePosition)
-    gameScreen.setTranslateY(HEIGHT * panePosition)
+    gameScreen.setTranslateX(SCREEN_WIDTH * panePosition)
+    gameScreen.setTranslateY(SCREEN_HEIGHT * panePosition)
 
     val gridSize = 16
     val mapWidth = 14
@@ -46,7 +44,7 @@ class MainGame(screenScale: Int) {
     GameController.setGameScreen(gameScreen)
     GameController.addGameEntity(frog)
 
-    val scene = new Scene(gameScreen, WIDTH * screenScale, HEIGHT * screenScale, Color.BLACK)
+    val scene = new Scene(gameScreen, SCREEN_WIDTH * screenScale, SCREEN_HEIGHT * screenScale, Color.BLACK)
     Input.initialize(scene)
     GameController.setGameScreen(gameScreen)
     scene
