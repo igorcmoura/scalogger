@@ -43,6 +43,8 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
     val scoreManager = new ScoreManager(gridSize, frog)
 
     map.render(gameScreen)
+
+    createGoals(map)
     scoreManager.render(gameScreen)
     createSpawners(map)
 
@@ -76,5 +78,12 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
     GameController.addGameEntity(new Spawner(car, 4000, 8000))
     GameController.addGameEntity(new Spawner(bulldozer, 6000, 9000))
     GameController.addGameEntity(new Spawner(yellowSportCar, 6000, 9000))
+  }
+
+  private def createGoals(map: GameMap): Unit = {
+    for (x <- Seq(1.5, 4.25, 7, 9.75, 12.5)) {
+      val goal = new Goal(new Vector2(x * map.gridSize, 2.5 * map.gridSize), map)
+      GameController.addGameEntity(goal)
+    }
   }
 }
