@@ -38,12 +38,10 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
     val playableArea = new Box(0, 2, mapWidth, 13) * gridSize
     val waterArea = new Box(0, 1.2, mapWidth, 7) * gridSize
     val map = new GameMap(gridSize, mapWidth, playableArea, waterArea)
+    map.render(gameScreen)
 
     val frog = new Frog(new Vector2(7.5 * map.gridSize, 14.5 * map.gridSize), 0.2, map)
     GameController.addGameEntity(frog)
-
-
-    map.render(gameScreen)
 
     val goals = createGoals(map)
     val scoreManager = new ScoreManager(gridSize, frog, goals)
