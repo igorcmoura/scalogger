@@ -29,6 +29,7 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
     val panePosition = screenScale * (screenScale - 1) / 2 // For some reason, when scaled, the pane moves on an arithmetic progressive distance
     gameScreen.setTranslateX(SCREEN_WIDTH * panePosition)
     gameScreen.setTranslateY(SCREEN_HEIGHT * panePosition)
+    GameController.setGameScreen(gameScreen)
 
     val gridSize = 16
     val mapWidth = 14
@@ -37,15 +38,13 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
     val map = new GameMap(gridSize, mapWidth, playableArea, waterArea)
 
     val frog = new Frog(new Vector2(7.5 * map.gridSize, 14.5 * map.gridSize), 0.2, map)
+    GameController.addGameEntity(frog)
 
     val scoreManager = new ScoreManager(gridSize, frog)
 
     map.render(gameScreen)
     scoreManager.render(gameScreen)
     createSpawners(map)
-
-    GameController.setGameScreen(gameScreen)
-    GameController.addGameEntity(frog)
 
     val scene = new Scene(gameScreen, SCREEN_WIDTH * screenScale, SCREEN_HEIGHT * screenScale, Color.BLACK)
     Input.initialize(scene)
