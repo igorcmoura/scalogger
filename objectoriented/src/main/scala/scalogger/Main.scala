@@ -2,7 +2,7 @@ package scalogger
 
 import javafx.application.Application
 import javafx.stage.Stage
-import scalogger.scenes.MainGame
+import scalogger.scenes.{MainGame, WelcomeScreen}
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -17,9 +17,24 @@ class Main extends Application {
 
     stage.setTitle("Scalogger")
 
-    val mainGame = new MainGame(screenScale)
-    stage.setScene(mainGame.getScene)
-    mainGame.run()
+    val scenesCommunicator = new ScenesCommunicator {
+      override def goToWelcomeScreen(): Unit = {
+        val welcomeScreen = new WelcomeScreen(screenScale, this)
+        stage.setScene(welcomeScreen.getScene)
+      }
+
+      override def goToMainGame(): Unit = {
+        val mainGame = new MainGame(screenScale, this)
+        stage.setScene(mainGame.getScene)
+        mainGame.run()
+      }
+    }
+    scenesCommunicator.goToWelcomeScreen()
     stage.show()
   }
+}
+
+trait ScenesCommunicator {
+  def goToWelcomeScreen()
+  def goToMainGame()
 }

@@ -3,6 +3,7 @@ package scalogger.scenes
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
+import scalogger.ScenesCommunicator
 import scalogger.engine.Direction.{LEFT, RIGHT}
 import scalogger.engine.{Box, Spawner, Vector2}
 import scalogger.entities._
@@ -10,7 +11,7 @@ import scalogger.managers.Constants.{SCREEN_HEIGHT, SCREEN_WIDTH}
 import scalogger.managers.Resources.Sprite
 import scalogger.managers.{GameController, GameMap, Input, ScoreManager}
 
-class MainGame(screenScale: Int) {
+class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
   private val scene = createScene()
 
   def getScene: Scene = this.scene
