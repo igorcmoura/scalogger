@@ -78,12 +78,12 @@ class Frog(initialPosition: Vector2,
     this.deathCounter = deathCounterInit
   }
 
-  def die(): Unit = {
+  private def die(): Unit = {
     state = State.DEAD
     notifier.notifyDeath()
   }
 
-  def drown(): Unit = {
+  private def drown(): Unit = {
     state = State.DROWNED
     notifier.notifyDeath()
   }
