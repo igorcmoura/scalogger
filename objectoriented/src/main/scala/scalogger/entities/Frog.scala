@@ -88,7 +88,7 @@ class Frog(initialPosition: Vector2,
     notifier.notifyDeath()
   }
 
-  def ride(rideable: Rideable): Unit = {
+  override def ride(rideable: Rideable): Unit = {
     getOff()
     this.riding = rideable
     rideable.carry(this)
