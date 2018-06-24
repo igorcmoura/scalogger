@@ -9,7 +9,7 @@ import scalogger.engine.{Box, Observer, Spawner, Vector2}
 import scalogger.entities._
 import scalogger.managers.Constants.{SCREEN_HEIGHT, SCREEN_WIDTH}
 import scalogger.managers.Resources.Sprite
-import scalogger.managers.{GameController, GameMap, Input, ScoreManager}
+import scalogger.managers._
 
 import scala.collection.mutable
 
@@ -46,6 +46,13 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
     val goals = createGoals(map)
     val scoreManager = new ScoreManager(gridSize, frog, goals)
     scoreManager.render(gameScreen)
+
+    val lifeManager = new LifeManager(map, frog, 3)
+    lifeManager.addObserver(new Observer[Unit] {
+      override def onNotify(signal: Unit): Unit = {
+        scenesCommunicator.goToWelcomeScreen()
+      }
+    })
 
     createSpawners(map)
 
