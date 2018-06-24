@@ -9,14 +9,26 @@ import scalogger.entities.FrogNotifier.Signals.Signals
 import scalogger.entities.{Frog, FrogNotifier}
 
 class LifeManager(map: GameMap, frog: Frog, private var lives: Int) {
+
+  private val livesText = new Text()
+
   private val observable = new Observable[Unit]
   initialize()
 
   private def initialize(): Unit = {
+    livesText.setFont(Font.font("Verdana", 10))
+    livesText.setFill(Color.WHITE)
+    livesText.setX(11 * map.gridSize)
+    livesText.setY(0.9 * map.gridSize)
+    updateText()
+
     val frogObserver = new Observer[FrogNotifier.Signals.Signals] {
       override def onNotify(signal: Signals): Unit = {
         signal match {
-          case Signals.DEATH => lives -= 1
+          case Signals.DEATH => {
+            lives -= 1
+            updateText()
+          }
           case _ =>
         }
         if (lives < 0) {
@@ -29,6 +41,10 @@ class LifeManager(map: GameMap, frog: Frog, private var lives: Int) {
 
   def addObserver(observer: Observer[Unit]): Unit = {
     observable.addObserver(observer)
+  }
+
+  private def updateText(): Unit = {
+    if (lives >= 0) livesText.setText("LIVES: " + lives)
   }
 
   private def endGame(): Unit = {
@@ -57,5 +73,9 @@ class LifeManager(map: GameMap, frog: Frog, private var lives: Int) {
     }
     GameController.removeGameEntity(frog)
     GameController.addGameEntity(gameOver)
+  }
+
+  def render(screen: Pane): Unit = {
+    screen.getChildren.add(livesText)
   }
 }

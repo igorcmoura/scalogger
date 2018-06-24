@@ -53,6 +53,7 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
         scenesCommunicator.goToWelcomeScreen()
       }
     })
+    lifeManager.render(gameScreen)
 
     createSpawners(map)
 
