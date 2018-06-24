@@ -4,9 +4,9 @@ import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.scene.text.{Font, Text}
 import scalogger.engine.Observer
-import scalogger.entities.{Frog, FrogNotifier}
 import scalogger.entities.FrogNotifier.Signals
 import scalogger.entities.FrogNotifier.Signals.Signals
+import scalogger.entities.{Frog, FrogNotifier}
 
 class ScoreManager(gridSize: Int, frog: Frog) {
 

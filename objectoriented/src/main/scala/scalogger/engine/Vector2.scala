@@ -1,6 +1,6 @@
 package scalogger.engine
 
-import Direction._
+import scalogger.engine.Direction._
 
 class Vector2(val x: Double, val y: Double) {
 

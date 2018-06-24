@@ -3,8 +3,8 @@ package scalogger.entities
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import scalogger.engine.Direction.LEFT
-import scalogger.managers.Resources.Sprite
 import scalogger.engine._
+import scalogger.managers.Resources.Sprite
 import scalogger.managers.{GameController, GameMap}
 
 class Turtles(initialPosition: Vector2,
