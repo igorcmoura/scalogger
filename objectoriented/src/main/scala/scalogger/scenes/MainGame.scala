@@ -5,11 +5,13 @@ import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import scalogger.ScenesCommunicator
 import scalogger.engine.Direction.{LEFT, RIGHT}
-import scalogger.engine.{Box, Spawner, Vector2}
+import scalogger.engine.{Box, Observer, Spawner, Vector2}
 import scalogger.entities._
 import scalogger.managers.Constants.{SCREEN_HEIGHT, SCREEN_WIDTH}
 import scalogger.managers.Resources.Sprite
 import scalogger.managers.{GameController, GameMap, Input, ScoreManager}
+
+import scala.collection.mutable
 
 class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
   private val scene = createScene()
@@ -81,8 +83,28 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
   }
 
   private def createGoals(map: GameMap): Unit = {
+    val goals = new mutable.ListBuffer[Goal]()
+
+    val goalsObserver: Observer[Boolean] = new Observer[Boolean] {
+      private var remainingGoals = 5
+
+      override def onNotify(signal: Boolean): Unit = {
+        if (signal) {
+          remainingGoals -= 1
+          if (remainingGoals <= 0) {
+            for (goal <- goals) {
+              goal.reset()
+            }
+            remainingGoals = 5
+          }
+        }
+      }
+    }
+
     for (x <- Seq(1.5, 4.25, 7, 9.75, 12.5)) {
       val goal = new Goal(new Vector2(x * map.gridSize, 2.5 * map.gridSize), map)
+      goals += goal
+      goal.addObserver(goalsObserver)
       GameController.addGameEntity(goal)
     }
   }
