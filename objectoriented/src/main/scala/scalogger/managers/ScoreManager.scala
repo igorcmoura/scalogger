@@ -6,9 +6,9 @@ import javafx.scene.text.{Font, Text}
 import scalogger.engine.Observer
 import scalogger.entities.FrogNotifier.Signals
 import scalogger.entities.FrogNotifier.Signals.Signals
-import scalogger.entities.{Frog, FrogNotifier}
+import scalogger.entities.{Frog, FrogNotifier, Goal}
 
-class ScoreManager(gridSize: Int, frog: Frog) {
+class ScoreManager(gridSize: Int, frog: Frog, goals: Traversable[Goal]) {
 
   private var score = 0
   private val scoreText = new Text()
@@ -30,6 +30,17 @@ class ScoreManager(gridSize: Int, frog: Frog) {
       }
     }
     frog.addObserver(frogObserver)
+
+    val goalObserver = new Observer[Boolean] {
+      override def onNotify(signal: Boolean): Unit = {
+        if (signal) {
+          addScore(50)
+        }
+      }
+    }
+    for (goal <- goals) {
+      goal.addObserver(goalObserver)
+    }
   }
 
   private def updateText(): Unit = {

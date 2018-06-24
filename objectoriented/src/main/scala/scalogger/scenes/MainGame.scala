@@ -42,12 +42,13 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
     val frog = new Frog(new Vector2(7.5 * map.gridSize, 14.5 * map.gridSize), 0.2, map)
     GameController.addGameEntity(frog)
 
-    val scoreManager = new ScoreManager(gridSize, frog)
 
     map.render(gameScreen)
 
-    createGoals(map)
+    val goals = createGoals(map)
+    val scoreManager = new ScoreManager(gridSize, frog, goals)
     scoreManager.render(gameScreen)
+
     createSpawners(map)
 
     val scene = new Scene(gameScreen, SCREEN_WIDTH * screenScale, SCREEN_HEIGHT * screenScale, Color.BLACK)
@@ -82,7 +83,7 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
     GameController.addGameEntity(new Spawner(yellowSportCar, 6000, 9000))
   }
 
-  private def createGoals(map: GameMap): Unit = {
+  private def createGoals(map: GameMap): mutable.ListBuffer[Goal] = {
     val goals = new mutable.ListBuffer[Goal]()
 
     val goalsObserver: Observer[Boolean] = new Observer[Boolean] {
@@ -107,5 +108,6 @@ class MainGame(screenScale: Int, scenesCommunicator: ScenesCommunicator) {
       goal.addObserver(goalsObserver)
       GameController.addGameEntity(goal)
     }
+    goals
   }
 }
