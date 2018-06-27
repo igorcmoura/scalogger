@@ -1,0 +1,55 @@
+@startuml
+package "Engine" {
+  object GameController {
+    initialize(pane, screenScale: Int)
+  }
+
+  class Spawner {
+    Spawner(GameEntity model, Vector2 atPosition)
+  }
+
+  object Input {
+    getButtonDown(Button)
+  }
+  enum Button {
+    MOVE_UP
+    MOVE_DOWN
+    MOVE_RIGHT
+    MOVE_LEFT
+  }
+  Button --+ Input
+}
+
+interface Rideable {
+  transport(Moveable)
+}
+interface Moveable {
+  move(Direction)
+}
+interface GameEntity {
+  readInputs()
+  computePhysics(deltaTime)
+  render()
+}
+
+enum Direction {
+  UP
+  DOWN
+  RIGHT
+  LEFT
+}
+
+class Log {
+
+}
+Log --|> Rideable
+Log --|> Moveable
+Log --|> GameEntity
+
+class Frog {
+  Frog()
+  jump(Direction)
+}
+Frog --|> GameEntity
+Frog --|> Moveable
+@enduml
